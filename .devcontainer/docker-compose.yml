@@ -1,5 +1,5 @@
 services:
-  tm-graph-development:
+  tm-graph-recomm:
     build:
       context: ../
       dockerfile: .devcontainer/Dockerfile
@@ -9,4 +9,5 @@ services:
           devices:
             - driver: nvidia
               capabilities: [gpu]
-              count: 1 # Assign number of GPUs or use 'all' to assign all available GPUs
+              # count: 1 # Assign number of GPUs or use 'all' to assign all available GPUs
+              device_ids: ["6"]

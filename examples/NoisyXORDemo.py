@@ -34,31 +34,24 @@ args = default_args()
 print("Creating training data")
 
 # Create train data
-
 graphs_train = Graphs(
     args.number_of_examples,
     symbols=['A', 'B'],
     hypervector_size=args.hypervector_size,
     hypervector_bits=args.hypervector_bits,
 )
-
 for graph_id in range(args.number_of_examples):
     graphs_train.set_number_of_graph_nodes(graph_id, 2)
-
 graphs_train.prepare_node_configuration()
-
 for graph_id in range(args.number_of_examples):
     number_of_outgoing_edges = 1
     graphs_train.add_graph_node(graph_id, 'Node 1', number_of_outgoing_edges)
     graphs_train.add_graph_node(graph_id, 'Node 2', number_of_outgoing_edges)
-
-graphs_train.prepare_edge_configuration()
-
+graphs_train.prepar_eedge_configuration()
 for graph_id in range(args.number_of_examples):
     edge_type = "Plain"
     graphs_train.add_graph_node_edge(graph_id, 'Node 1', 'Node 2', edge_type)
     graphs_train.add_graph_node_edge(graph_id, 'Node 2', 'Node 1', edge_type)
-
 Y_train = np.empty(args.number_of_examples, dtype=np.uint32)
 for graph_id in range(args.number_of_examples):
     x1 = random.choice(['A', 'B'])
@@ -74,32 +67,23 @@ for graph_id in range(args.number_of_examples):
 
     if np.random.rand() <= args.noise:
         Y_train[graph_id] = 1 - Y_train[graph_id]
-
 graphs_train.encode()
 
-# Create test data
-
+# Create test data 
 print("Creating testing data")
-
 graphs_test = Graphs(args.number_of_examples, init_with=graphs_train)
-
 for graph_id in range(args.number_of_examples):
     graphs_test.set_number_of_graph_nodes(graph_id, 2)
-
 graphs_test.prepare_node_configuration()
-
 for graph_id in range(args.number_of_examples):
     number_of_outgoing_edges = 1
     graphs_test.add_graph_node(graph_id, 'Node 1', number_of_outgoing_edges)
     graphs_test.add_graph_node(graph_id, 'Node 2', number_of_outgoing_edges)
-
 graphs_test.prepare_edge_configuration()
-
 for graph_id in range(args.number_of_examples):
     edge_type = "Plain"
     graphs_test.add_graph_node_edge(graph_id, 'Node 1', 'Node 2', edge_type)
     graphs_test.add_graph_node_edge(graph_id, 'Node 2', 'Node 1', edge_type)
-
 Y_test = np.empty(args.number_of_examples, dtype=np.uint32)
 for graph_id in range(args.number_of_examples):
     x1 = random.choice(['A', 'B'])
@@ -112,7 +96,6 @@ for graph_id in range(args.number_of_examples):
         Y_test[graph_id] = 0
     else:
         Y_test[graph_id] = 1
-
 graphs_test.encode()
 
 tm = MultiClassGraphTsetlinMachine(

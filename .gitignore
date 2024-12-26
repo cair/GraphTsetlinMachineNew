@@ -1,3 +1,7 @@
+build/
+GraphTsetlinMachine.egg-info/
+/dist/
+
 .envrc
 
 # Byte-compiled / optimized / DLL files

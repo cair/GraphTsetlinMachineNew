@@ -1,7 +1,7 @@
 {
-  "name": "TM Graph Devcontainer",
+  "name": "TM Graph Recomm",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "tm-graph-development",
+  "service": "tm-graph-recomm",
   "workspaceFolder": "/app",
   "forwardPorts": [],
   "postCreateCommand": "echo 'Devcontainer is ready'",

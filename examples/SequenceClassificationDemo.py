@@ -35,7 +35,6 @@ args = default_args()
 print("Creating training data")
 
 # Create train data
-
 graphs_train = Graphs(
     args.number_of_examples,
     symbols=['A'],
@@ -43,19 +42,14 @@ graphs_train = Graphs(
     hypervector_bits=args.hypervector_bits,
     double_hashing = args.double_hashing
 )
-
 for graph_id in range(args.number_of_examples):
     graphs_train.set_number_of_graph_nodes(graph_id, np.random.randint(args.number_of_classes, args.max_sequence_length+1))
-
 graphs_train.prepare_node_configuration()
-
 for graph_id in range(args.number_of_examples):
     for node_id in range(graphs_train.number_of_graph_nodes[graph_id]):
         number_of_edges = 2 if node_id > 0 and node_id < graphs_train.number_of_graph_nodes[graph_id]-1 else 1
         graphs_train.add_graph_node(graph_id, node_id, number_of_edges)
-
 graphs_train.prepare_edge_configuration()
-
 Y_train = np.empty(args.number_of_examples, dtype=np.uint32)
 for graph_id in range(args.number_of_examples):
     for node_id in range(graphs_train.number_of_graph_nodes[graph_id]):
@@ -76,26 +70,19 @@ for graph_id in range(args.number_of_examples):
 
     if np.random.rand() <= args.noise:
         Y_train[graph_id] = np.random.choice(np.setdiff1d(np.arange(args.number_of_classes), [Y_train[graph_id]]))
-
 graphs_train.encode()
 
 # Create test data
-
 print("Creating testing data")
-
 graphs_test = Graphs(args.number_of_examples, init_with=graphs_train)
 for graph_id in range(args.number_of_examples):
     graphs_test.set_number_of_graph_nodes(graph_id, np.random.randint(args.number_of_classes, args.max_sequence_length+1))
-
 graphs_test.prepare_node_configuration()
-
 for graph_id in range(args.number_of_examples):
     for node_id in range(graphs_test.number_of_graph_nodes[graph_id]):
         number_of_edges = 2 if node_id > 0 and node_id < graphs_test.number_of_graph_nodes[graph_id]-1 else 1
         graphs_test.add_graph_node(graph_id, node_id, number_of_edges)
-
 graphs_test.prepare_edge_configuration()
-
 Y_test = np.empty(args.number_of_examples, dtype=np.uint32)
 for graph_id in range(args.number_of_examples):
     for node_id in range(graphs_test.number_of_graph_nodes[graph_id]):
@@ -113,7 +100,6 @@ for graph_id in range(args.number_of_examples):
     node_id = np.random.randint(Y_test[graph_id], graphs_test.number_of_graph_nodes[graph_id])
     for node_pos in range(Y_test[graph_id] + 1):
         graphs_test.add_graph_node_property(graph_id, node_id - node_pos, 'A')
-
 graphs_test.encode()
 
 tm = MultiClassGraphTsetlinMachine(

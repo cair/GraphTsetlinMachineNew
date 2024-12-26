@@ -1,0 +1,7 @@
+numpy
+numba
+pycuda
+scipy
+pandas
+kagglehub
+scikit-learn
